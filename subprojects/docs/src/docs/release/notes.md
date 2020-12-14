@@ -101,6 +101,10 @@ In Gradle 7.0 we moved the following classes out of incubation phase.
 - org.gradle.tooling.model.eclipse.EclipseWorkspaceProject
 - org.gradle.tooling.model.eclipse.RunClosedProjectBuildDependencies
 
+In Gradle 7.0 we moved the following method out of incubation phase.
+
+- org.gradle.api.distribution.Distribution.getDistributionBaseName()
+
 <!--
 ### Example promoted
 -->

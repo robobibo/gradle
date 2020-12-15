@@ -19,7 +19,6 @@ package org.gradle.api.internal.project.taskfactory
 import org.gradle.api.DefaultTask
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.Task
-import org.gradle.api.internal.AbstractTask
 import org.gradle.api.internal.TaskInternal
 import org.gradle.api.reflect.ObjectInstantiationException
 import org.gradle.api.tasks.TaskInstantiationException
@@ -68,7 +67,7 @@ class TaskFactoryTest extends AbstractProjectBuilderSpec {
         task instanceof DefaultTask
 
         where:
-        type << [Task, TaskInternal, AbstractTask, DefaultTask]
+        type << [Task, TaskInternal, DefaultTask]
     }
 
     void testCreateTaskForDeserialization() {
@@ -76,7 +75,7 @@ class TaskFactoryTest extends AbstractProjectBuilderSpec {
         Task task = taskFactory.create(new TaskIdentity(TestDefaultTask, 'task', null, Path.path(':task'), null, 12), (Object[]) null)
 
         then:
-        1 * deserializeInstantiator.newInstance(TestDefaultTask, AbstractTask) >> { new TestDefaultTask() }
+        1 * deserializeInstantiator.newInstance(TestDefaultTask, DefaultTask) >> { new TestDefaultTask() }
         task instanceof TestDefaultTask
     }
 
@@ -86,7 +85,16 @@ class TaskFactoryTest extends AbstractProjectBuilderSpec {
 
         then:
         InvalidUserDataException e = thrown()
-        e.message == "Cannot create task of type 'NotATask' as it does not implement the Task interface."
+        e.message == "Cannot create task ':task' of type 'NotATask' as it does not implement the Task interface."
+    }
+
+    void testCreateTaskForTypeWhichDoesNotExtendsDefaultTask() {
+        when:
+        taskFactory.create(new TaskIdentity(NotADefaultTask, 'task', null, Path.path(':task'), null, 12))
+
+        then:
+        InvalidUserDataException e = thrown()
+        e.message == "Cannot create task ':task' of type 'NotADefaultTask' as it does not extend DefaultTask."
     }
 
     void wrapsFailureToCreateTaskInstance() {
@@ -111,5 +119,8 @@ class TaskFactoryTest extends AbstractProjectBuilderSpec {
     }
 
     static class NotATask {
+    }
+
+    static abstract class NotADefaultTask implements Task {
     }
 }

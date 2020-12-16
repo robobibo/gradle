@@ -85,7 +85,9 @@ fun enableExperimentalTestDistribution(testCoverage: TestCoverage, subprojects: 
 
 fun getTestTaskName(testCoverage: TestCoverage, stage: Stage, subprojects: List<String>): String {
     val testTaskName = "${testCoverage.testType.name}Test"
-    return if (subprojects.intersect(slowSubprojects).isNotEmpty()) {
+    return  if (testTaskName == "soakTest") {
+        ":end-to-end-tests:soak:soakTest"
+    } else if (subprojects.intersect(slowSubprojects).isNotEmpty()) {
         subprojects.joinToString(" ") { ":$it:$testTaskName" }
     } else if (testCoverage.testDistribution && stage.omitsSlowProjects) {
         return ":$testTaskName ${slowSubprojects.joinToString(" ") { "-x :$it:$testTaskName" }}"

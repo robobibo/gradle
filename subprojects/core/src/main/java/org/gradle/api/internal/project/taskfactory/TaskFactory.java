@@ -19,7 +19,6 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.Describable;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Task;
-import org.gradle.api.internal.TaskInternal;
 import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.reflect.ObjectInstantiationException;
 import org.gradle.api.tasks.TaskInstantiationException;
@@ -62,7 +61,7 @@ public class TaskFactory implements ITaskFactory {
         }
 
         final Class<? extends DefaultTask> implType;
-        if (identity.type == Task.class || identity.type == TaskInternal.class) {
+        if (identity.type == Task.class) {
             implType = DefaultTask.class;
         } else if (DefaultTask.class.isAssignableFrom(identity.type)) {
             implType = identity.type.asSubclass(DefaultTask.class);

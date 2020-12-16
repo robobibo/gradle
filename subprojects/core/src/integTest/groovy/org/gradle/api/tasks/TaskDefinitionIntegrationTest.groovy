@@ -156,7 +156,7 @@ class TaskDefinitionIntegrationTest extends AbstractIntegrationSpec {
         succeeds("thing")
     }
 
-    def "creating a task of type TaskInternal is deprecated"() {
+    def "creating a task of type TaskInternal fails"() {
         buildFile << """
             task thing(type: ${TaskInternal.name}) { t ->
                 assert t instanceof DefaultTask
@@ -165,8 +165,8 @@ class TaskDefinitionIntegrationTest extends AbstractIntegrationSpec {
         """
 
         expect:
-        executer.expectDocumentedDeprecationWarning("Registering task ':thing' with type 'TaskInternal' has been deprecated. This will fail with an error in Gradle 7.0. Consult the upgrading guide for further information: https://docs.gradle.org/current/userguide/upgrading_version_6.html#abstract_task_deprecated")
-        succeeds("thing")
+        fails("thing")
+        failureHasCause("Cannot create task ':thing' of type 'TaskInternal' as it does not extend DefaultTask.")
     }
 
     def "does not hide local methods and variables"() {

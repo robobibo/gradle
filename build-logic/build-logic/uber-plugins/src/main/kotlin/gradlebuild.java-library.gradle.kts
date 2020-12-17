@@ -17,7 +17,7 @@
 plugins {
     `java-library`
     id("gradlebuild.dependency-modules")
-    id("gradlebuild.minify")
+    // id("gradlebuild.minify")
     id("gradlebuild.reproducible-archives")
     id("gradlebuild.unittest-and-compile")
     id("gradlebuild.test-fixtures")

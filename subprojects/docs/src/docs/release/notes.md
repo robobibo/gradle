@@ -11,6 +11,7 @@ Include only their name, impactful features should be called out separately belo
 [Martin d'Anjou](https://github.com/martinda)
 [Till Krullmann](https://github.com/tkrullmann)
 [Andreas Axelsson](https://github.com/judgeaxl)
+[Pedro Tôrres](https://github.com/t0rr3sp3dr0)
 
 ## Upgrade Instructions
 
@@ -122,6 +123,13 @@ In Gradle 7.0 we moved the following classes out of incubation phase.
 - org.gradle.tooling.events.test.Destination
 - org.gradle.tooling.events.test.TestOutputDescriptor
 - org.gradle.tooling.events.test.TestOutputEvent
+
+- org.gradle.process.ExecOperations
+
+- org.gradle.api.model.ObjectFactory.directoryProperty
+- org.gradle.api.model.ObjectFactory.fileCollection
+- org.gradle.api.model.ObjectFactory.fileProperty
+- org.gradle.api.model.ObjectFactory.sourceDirectorySet
 
 <!--
 ### Example promoted
